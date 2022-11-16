@@ -1,0 +1,144 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(early(addPluginSbtFile="""C:\Users\toan\AppData\Local\Temp\idea.sbt"""), None, None)
+[debug] > Exec(addPluginSbtFile="""C:\Users\toan\AppData\Local\Temp\idea.sbt""", None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.8.0 (Oracle Corporation Java 16.0.2)
+[debug]       Load.loadUnit: plugins took 200.0535ms
+[debug]       Load.loadUnit: defsScala took 0.5836ms
+[debug] [Loading] Scanning directory C:\Users\toan\.sbt\1.0\plugins
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\toan\.sbt\1.0\plugins, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 63.9468 ms
+[debug]           Load.resolveProject(global-plugins) took 99.4702ms
+[debug]         Load.loadTransitive: finalizeProject(Project(id global-plugins, base: C:\Users\toan\.sbt\1.0\plugins, plugins: List(<none>))) took 215.5864ms
+[debug] [Loading] Done in C:\Users\toan\.sbt\1.0\plugins, returning: (global-plugins)
+[debug]       Load.loadUnit: loadedProjectsRaw took 272.8653ms
+[debug]       Load.loadUnit: cleanEvalClasses took 0.3351ms
+[debug]     Load.loadUnit(file:/C:/Users/toan/.sbt/1.0/plugins/, ...) took 495.7157ms
+[debug]   Load.apply: load took 920.4068ms
+[debug]   Load.apply: resolveProjects took 19.4556ms
+[debug]   Load.apply: finalTransforms took 191.6547ms
+[debug]   Load.apply: config.delegates took 18.8891ms
+[debug]   Load.apply: Def.make(settings)... took 662.2153ms
+[debug]   Load.apply: structureIndex took 198.7242ms
+[debug]   Load.apply: mkStreams took 3.8475ms
+[info] loading global plugins from C:\Users\toan\.sbt\1.0\plugins
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug] Load.defaultLoad until apply took 4268.2109ms
+[debug]           Load.loadUnit: plugins took 49.6367ms
+[debug]           Load.loadUnit: defsScala took 0.0072ms
+[debug] [Loading] Scanning directory C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\project
+[debug]             Load.loadUnit: mkEval took 11.7431ms
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 6.0227 ms
+[info] loading settings for project prisonrework-build from idea.sbt ...
+[debug]               Load.resolveProject(prisonrework-build) took 39.183ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id prisonrework-build, base: C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\project, plugins: List(<none>))) took 46.2691ms
+[debug] [Loading] Done in C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\project, returning: (prisonrework-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 5290.152ms
+[debug]           Load.loadUnit: cleanEvalClasses took 11.9076ms
+[debug]         Load.loadUnit(file:/C:/Users/toan/Documents/Universitet%20i%20bergen/UIB/PrisonRework/project/, ...) took 5353.5351ms
+[debug]       Load.apply: load took 5357.2614ms
+[debug]       Load.apply: resolveProjects took 0.1826ms
+[debug]       Load.apply: finalTransforms took 28.3553ms
+[debug]       Load.apply: config.delegates took 0.6059ms
+[debug]       Load.apply: Def.make(settings)... took 447.8901ms
+[debug]       Load.apply: structureIndex took 118.0946ms
+[debug]       Load.apply: mkStreams took 0.004ms
+[info] loading project definition from C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\project
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[warn] Unrecognized repository Scala Plugin Bundled Repository, ignoring it
+[warn] Unrecognized repository Scala Plugin Bundled Repository, ignoring it
+[debug]     Load.loadUnit: plugins took 9486.7494ms
+[debug]     Load.loadUnit: defsScala took 0.0074ms
+[debug] [Loading] Scanning directory C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework
+[debug]       Load.loadUnit: mkEval took 0.4521ms
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(org.jetbrains.sbt.StructurePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(org.jetbrains.sbt.IdeaShellPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.StructurePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.IdeaShellPlugin)))
+[debug] Clause(And(Set(Atom(sbt.plugins.CorePlugin), Atom(sbt.plugins.JvmPlugin))),Set(Atom(org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.SemanticdbPlugin,org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin,sbt.plugins.JUnitXmlReportPlugin,org.jetbrains.sbt.IdeaShellPlugin,org.jetbrains.sbt.StructurePlugin,sbt.plugins.MiniDependencyTreePlugin)
+[debug] Plugins.deducer#function took 2.9014 ms
+[info] loading settings for project prisonrework from build.sbt ...
+[debug]         Load.resolveProject(prisonrework) took 51.5806ms
+[debug]       Load.loadTransitive: finalizeProject(Project(id prisonrework, base: C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework, plugins: List(<none>))) took 56.1768ms
+[debug] [Loading] Done in C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework, returning: (prisonrework)
+[debug]     Load.loadUnit: loadedProjectsRaw took 2128.7102ms
+[debug]     Load.loadUnit: cleanEvalClasses took 51.9296ms
+[debug]   Load.loadUnit(file:/C:/Users/toan/Documents/Universitet%20i%20bergen/UIB/PrisonRework/, ...) took 11669.317ms
+[debug] Load.apply: load took 11673.1659ms
+[debug] Load.apply: resolveProjects took 0.1873ms
+[debug] Load.apply: finalTransforms took 47.0362ms
+[debug] Load.apply: config.delegates took 0.482ms
+[debug] Load.apply: Def.make(settings)... took 196.1149ms
+[debug] Load.apply: structureIndex took 45.0198ms
+[debug] Load.apply: mkStreams took 0.0031ms
+[info] set current project to PrisonRework (in build file:/C:/Users/toan/Documents/Universitet%20i%20bergen/UIB/PrisonRework/)
+[debug] > Exec(sbtPopOnFailure, None, None)
+[debug] > Exec(resumeFromFailure, None, None)
+[debug] > Exec(notifyUsersAboutShell, None, None)
+[debug] > Exec(iflast shell, None, None)
+[debug] > Exec(; set ideaPort in Global := 49490 ; idea-shell, None, None)
+[debug] > Exec(set ideaPort in Global := 49490, None, None)
+[info] Defining Global / ideaPort
+[info] The new value will be used by Compile / compile, Test / compile
+[debug] Defining 
+[debug] 	Global / ideaPort
+[debug] 
+[debug] The new value will be used by 
+[debug] 	Compile / compile
+[debug] 	Test / compile
+[info] Reapplying settings...
+[info] set current project to PrisonRework (in build file:/C:/Users/toan/Documents/Universitet%20i%20bergen/UIB/PrisonRework/)
+[debug] > Exec(idea-shell, None, None)

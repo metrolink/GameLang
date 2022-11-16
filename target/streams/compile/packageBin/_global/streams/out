@@ -1,0 +1,57 @@
+[debug] Packaging C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\prisonrework_2.13-0.1.0-SNAPSHOT.jar ...
+[debug] Input file mappings:
+[debug] 	AkkaQuickstart$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\AkkaQuickstart$.class
+[debug] 	AkkaQuickstart$delayedInit$body.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\AkkaQuickstart$delayedInit$body.class
+[debug] 	AkkaQuickstart.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\AkkaQuickstart.class
+[debug] 	Prison$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prison$.class
+[debug] 	Prison$StartGame$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prison$StartGame$.class
+[debug] 	Prison$StartGame.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prison$StartGame.class
+[debug] 	Prison.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prison.class
+[debug] 	Prisoner$$anonfun$ActorFight$1.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$$anonfun$ActorFight$1.class
+[debug] 	Prisoner$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$.class
+[debug] 	Prisoner$ActorInfo$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ActorInfo$.class
+[debug] 	Prisoner$ActorInfo.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ActorInfo.class
+[debug] 	Prisoner$AskToFight$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$AskToFight$.class
+[debug] 	Prisoner$AskToFight.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$AskToFight.class
+[debug] 	Prisoner$ChangeTheScore$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ChangeTheScore$.class
+[debug] 	Prisoner$ChangeTheScore.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ChangeTheScore.class
+[debug] 	Prisoner$CollideGuard$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$CollideGuard$.class
+[debug] 	Prisoner$CollideGuard.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$CollideGuard.class
+[debug] 	Prisoner$CollidePlayer$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$CollidePlayer$.class
+[debug] 	Prisoner$CollidePlayer.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$CollidePlayer.class
+[debug] 	Prisoner$CollideWall$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$CollideWall$.class
+[debug] 	Prisoner$CollideWall.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$CollideWall.class
+[debug] 	Prisoner$collision.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$collision.class
+[debug] 	Prisoner$conversation$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$conversation$.class
+[debug] 	Prisoner$conversation.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$conversation.class
+[debug] 	Prisoner$fightT2.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$fightT2.class
+[debug] 	Prisoner$talk.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$talk.class
+[debug] 	Prisoner.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner.class
+[debug] Done packaging.
