@@ -51,13 +51,12 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
   def behaviour_B1(): Behavior[msgType_T] = {
     Behaviors.receiveMessagePartial {
       case msg_ChangeTheScore(point) =>
-        println("B1: "+ context.self.toString + " RECEIVE msg_ChangeTheScore")
         points += point
         println(context.self.toString + "now has " + points)
-        println(context.self.toString + "Behaviour will change from B1 to B2")
         behaviour_B2() //Change behavior
 
       case msg_AskToFight(replyTo, point) =>
+        //Pushes the current message to the back of the mailbox.
         context.self ! msg_AskToFight(replyTo,point)
         behaviour_B1() //Behavior.same
 
