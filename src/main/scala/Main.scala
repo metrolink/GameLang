@@ -1,8 +1,8 @@
 //#full-example
 
 //import akka.actor.typed.internal.receptionist.LocalReceptionist.behavior
-import akka.actor.typed.{ActorRef, ActorSystem, Behavior, DeathPactException, SupervisorStrategy, Terminated}
-import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
+import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
+import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 
@@ -12,7 +12,7 @@ import scala.language.postfixOps
 
 object Prisoner{
 
-  sealed trait msgType_T //fight AskToFight and ActorInfo
+  sealed trait msgType_T
 
   final case class msg_AskToFight(replyTo: ActorRef[msgType_T], point: Int) extends msgType_T
 
@@ -34,14 +34,10 @@ object Prisoner{
 
   def apply(): Behavior[msgType_T] = {
     Behaviors.setup(context => new Prisoner(context).behaviour_B2())
-
-
   }
 }
 
 class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
-  //Behaviors.supervise(behavior).onFailure[DeathPactException](SupervisorStrategy.resume)
-
   import Prisoner._
 
   var points = 2000
@@ -53,28 +49,21 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
 
 
   def behaviour_B1(): Behavior[msgType_T] = {
-    //println(context.self.toString + " is changing score")
-
     Behaviors.receiveMessagePartial {
       case msg_ChangeTheScore(point) =>
         println("B1: "+ context.self.toString + " RECEIVE msg_ChangeTheScore")
         points += point
         println(context.self.toString + "now has " + points)
         println(context.self.toString + "Behaviour will change from B1 to B2")
-        //context.self ! ch_B2()
-        behaviour_B2()
-        //Behaviors.same
+        behaviour_B2() //Change behavior
 
       case msg_AskToFight(replyTo, point) =>
-        //println("unhandled from " + context.self.toString)
         context.self ! msg_AskToFight(replyTo,point)
-        Behaviors.same
+        behaviour_B1() //Behavior.same
 
       case msg_ActorInfo(name, point) =>
-        //println("B1: " + context.self.toString + " RECEIVE msg_ActorInfo")
         name ! msg_AskToFight(context.self, point)
-        //println(context.self.toString + "Behaviour will stay in B1")
-        Behaviors.same
+        behaviour_B1() //Behavior.same
     }
 
 
@@ -84,8 +73,6 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
     //(point, name)
     Behaviors.receiveMessagePartial {
       case msg_AskToFight(replyTo, point) =>
-
-        //println("B2: " + context.self.toString + " RECEIVE msg_AskToFight FROM " + replyTo.toString)
         replyTo ! msg_ChangeTheScore(point)
         if (shield) {
           points -= point / 2
@@ -101,32 +88,24 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
           //Behaviors.stopped
           context.stop(context.self)
         }
-        //println("B2: " + context.self.toString + " SEND msg_AskToFight TO " +  replyTo.toString)
         replyTo ! msg_AskToFight(context.self, point)
-        println(context.self.toString + "Behaviour will change from B2 to B1")
-
-        //context.self ! ch_B1()
         behaviour_B1()
-        //Behaviors.same
 
       case msg_ChangeTheScore(point) =>
-        println("unhandled from " + context.self.toString)
-        //context.self ! msg_AskToFight(replyTo, point)
-        Behaviors.unhandled
+        //Pushes the current message to the back of the mailbox queue.
+        context.self ! msg_ChangeTheScore(point)
+        behaviour_B2() //Behavior.same
 
       case msg_ActorInfo(name, point) =>
-        //println(context.self.toString + " RECEIVE msg_ActorInfo")
         name ! msg_AskToFight(context.self, point)
-        //println(context.self.toString + "Behaviour will change from B2 to B1")
-        behaviour_B1()
-
-
+        behaviour_B1() //Change the behavior
     }
   }
 
   def CheckCollition(): Behavior[collision] = Behaviors.receive { (context, message) =>
           message match {
             case CollidePlayer(replyTo, xPos, yPos) =>
+              //if the player position is the same as the opponent, push back
               if (xPos == position(0) && yPos == position(1)) {
                 replyTo ! CollidePlayer(context.self, position(0), position(1))
                 position(0) -= 1
@@ -136,10 +115,12 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
                 Behaviors.same
 
             case CollideWall() =>
+              //Wall is a static object so push back only player
               position(0) -= 1
               Behaviors.same
 
             case CollideGuard(point) =>
+              //if caught by guard, lose points
               points -= point
               Behaviors.same
           }
@@ -169,7 +150,7 @@ object Prison {
       val prisoner3 = context.spawn(Prisoner(), "P3")
 
       Behaviors.receiveMessage { message =>
-
+        //Send messages to P2 and P3
         prisoner ! Prisoner.msg_ActorInfo(prisoner2, message.points)
         prisoner ! Prisoner.msg_ActorInfo(prisoner3, message.points)
         Behaviors.same
