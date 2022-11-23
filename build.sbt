@@ -12,4 +12,4 @@ lazy val root = (project in file("."))
 val AkkaVersion = "2.7.0"
 libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion
 
-//libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.4"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.4"

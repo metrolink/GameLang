@@ -53,16 +53,16 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
       case msg_ChangeTheScore(point) =>
         points += point
         println(context.self.toString + "now has " + points)
-        behaviour_B2() //Change behavior
+        behaviour_B2 //Change behavior
 
       case msg_AskToFight(replyTo, point) =>
         //Pushes the current message to the back of the mailbox.
         context.self ! msg_AskToFight(replyTo,point)
-        behaviour_B1() //Behavior.same
+        behaviour_B1 //Behavior.same
 
       case msg_ActorInfo(name, point) =>
         name ! msg_AskToFight(context.self, point)
-        behaviour_B1() //Behavior.same
+        behaviour_B1 //Behavior.same
     }
 
 
@@ -84,20 +84,21 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         }
         if (points < 0) {
           println(context.self.toString + " stopped")
-          //Behaviors.stopped
-          context.stop(context.self)
+          Behaviors.stopped
         }
+        else {
         replyTo ! msg_AskToFight(context.self, point)
-        behaviour_B1()
+        behaviour_B1
+        }
 
       case msg_ChangeTheScore(point) =>
         //Pushes the current message to the back of the mailbox queue.
         context.self ! msg_ChangeTheScore(point)
-        behaviour_B2() //Behavior.same
+        behaviour_B2 //Behavior.same
 
       case msg_ActorInfo(name, point) =>
         name ! msg_AskToFight(context.self, point)
-        behaviour_B1() //Change the behavior
+        behaviour_B1 //Change the behavior
     }
   }
 
