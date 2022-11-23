@@ -61,20 +61,20 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         points += point
         println(context.self.toString + "now has " + points)
         println(context.self.toString + "Behaviour will change from B1 to B2")
+        //context.self ! ch_B2()
         behaviour_B2()
+        //Behaviors.same
 
-      /*case AskToFight(replyTo, point) =>
-        context.log.info("unhandled from " + context.self.toString)
-        Behaviors.unhandled*/
+      case msg_AskToFight(replyTo, point) =>
+        //println("unhandled from " + context.self.toString)
+        context.self ! msg_AskToFight(replyTo,point)
+        Behaviors.same
 
       case msg_ActorInfo(name, point) =>
-        println("B1: " + context.self.toString + " RECEIVE msg_ActorInfo")
+        //println("B1: " + context.self.toString + " RECEIVE msg_ActorInfo")
         name ! msg_AskToFight(context.self, point)
-        println(context.self.toString + "Behaviour will stay in B1")
-
+        //println(context.self.toString + "Behaviour will stay in B1")
         Behaviors.same
-        //changethescore()
-
     }
 
 
@@ -85,7 +85,7 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
     Behaviors.receiveMessagePartial {
       case msg_AskToFight(replyTo, point) =>
 
-        println("B2: " + context.self.toString + " RECEIVE msg_AskToFight")
+        //println("B2: " + context.self.toString + " RECEIVE msg_AskToFight FROM " + replyTo.toString)
         replyTo ! msg_ChangeTheScore(point)
         if (shield) {
           points -= point / 2
@@ -101,16 +101,23 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
           //Behaviors.stopped
           context.stop(context.self)
         }
-        println("B2: " + context.self.toString + " SEND msg_AskToFight TO " +  replyTo.toString)
+        //println("B2: " + context.self.toString + " SEND msg_AskToFight TO " +  replyTo.toString)
         replyTo ! msg_AskToFight(context.self, point)
         println(context.self.toString + "Behaviour will change from B2 to B1")
-        behaviour_B1()
 
+        //context.self ! ch_B1()
+        behaviour_B1()
+        //Behaviors.same
+
+      case msg_ChangeTheScore(point) =>
+        println("unhandled from " + context.self.toString)
+        //context.self ! msg_AskToFight(replyTo, point)
+        Behaviors.unhandled
 
       case msg_ActorInfo(name, point) =>
-        println(context.self.toString + " RECEIVE msg_ActorInfo")
+        //println(context.self.toString + " RECEIVE msg_ActorInfo")
         name ! msg_AskToFight(context.self, point)
-        println(context.self.toString + "Behaviour will change from B2 to B1")
+        //println(context.self.toString + "Behaviour will change from B2 to B1")
         behaviour_B1()
 
 
