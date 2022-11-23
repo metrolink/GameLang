@@ -14,22 +14,12 @@
 [debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prison$StartGame.class
 [debug] 	Prison.class
 [debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prison.class
-[debug] 	Prisoner$$anonfun$ActorFight$1.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$$anonfun$ActorFight$1.class
+[debug] 	Prisoner$$anonfun$behaviour_B1$1.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$$anonfun$behaviour_B1$1.class
+[debug] 	Prisoner$$anonfun$behaviour_B2$1.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$$anonfun$behaviour_B2$1.class
 [debug] 	Prisoner$.class
 [debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$.class
-[debug] 	Prisoner$ActorInfo$.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ActorInfo$.class
-[debug] 	Prisoner$ActorInfo.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ActorInfo.class
-[debug] 	Prisoner$AskToFight$.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$AskToFight$.class
-[debug] 	Prisoner$AskToFight.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$AskToFight.class
-[debug] 	Prisoner$ChangeTheScore$.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ChangeTheScore$.class
-[debug] 	Prisoner$ChangeTheScore.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$ChangeTheScore.class
 [debug] 	Prisoner$CollideGuard$.class
 [debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$CollideGuard$.class
 [debug] 	Prisoner$CollideGuard.class
@@ -48,8 +38,20 @@
 [debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$conversation$.class
 [debug] 	Prisoner$conversation.class
 [debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$conversation.class
-[debug] 	Prisoner$fightT2.class
-[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$fightT2.class
+[debug] 	Prisoner$msgType_T.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$msgType_T.class
+[debug] 	Prisoner$msg_ActorInfo$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$msg_ActorInfo$.class
+[debug] 	Prisoner$msg_ActorInfo.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$msg_ActorInfo.class
+[debug] 	Prisoner$msg_AskToFight$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$msg_AskToFight$.class
+[debug] 	Prisoner$msg_AskToFight.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$msg_AskToFight.class
+[debug] 	Prisoner$msg_ChangeTheScore$.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$msg_ChangeTheScore$.class
+[debug] 	Prisoner$msg_ChangeTheScore.class
+[debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$msg_ChangeTheScore.class
 [debug] 	Prisoner$talk.class
 [debug] 	  C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes\Prisoner$talk.class
 [debug] 	Prisoner.class

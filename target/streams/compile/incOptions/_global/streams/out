@@ -1,7 +1,5 @@
 [debug] Created transactional ClassFileManager with tempDir = C:\Users\toan\Documents\Universitet i bergen\UIB\PrisonRework\target\scala-2.13\classes.bak
 [debug] About to delete class files:
-[debug] We backup class files:
-[debug] Registering generated classes:
 [debug] 	Prisoner$ChangeTheScore$.class
 [debug] 	AkkaQuickstart$.class
 [debug] 	Prisoner$AskToFight.class
@@ -26,6 +24,63 @@
 [debug] 	Prisoner$CollidePlayer$.class
 [debug] 	Prisoner$ChangeTheScore.class
 [debug] 	AkkaQuickstart$delayedInit$body.class
+[debug] 	Prison$StartGame.class
+[debug] 	Prison$StartGame$.class
+[debug] 	Prisoner$.class
+[debug] We backup class files:
+[debug] 	Prisoner$ChangeTheScore$.class
+[debug] 	AkkaQuickstart$.class
+[debug] 	Prisoner$AskToFight.class
+[debug] 	Prison.class
+[debug] 	Prisoner$conversation.class
+[debug] 	Prisoner$fightT2.class
+[debug] 	Prisoner.class
+[debug] 	Prison$.class
+[debug] 	Prisoner$CollideGuard$.class
+[debug] 	Prisoner$conversation$.class
+[debug] 	Prisoner$collision.class
+[debug] 	Prisoner$$anonfun$ActorFight$1.class
+[debug] 	Prisoner$CollidePlayer.class
+[debug] 	AkkaQuickstart.class
+[debug] 	Prisoner$CollideWall.class
+[debug] 	Prisoner$CollideGuard.class
+[debug] 	Prisoner$AskToFight$.class
+[debug] 	Prisoner$ActorInfo$.class
+[debug] 	Prisoner$CollideWall$.class
+[debug] 	Prisoner$talk.class
+[debug] 	Prisoner$ActorInfo.class
+[debug] 	Prisoner$CollidePlayer$.class
+[debug] 	Prisoner$ChangeTheScore.class
+[debug] 	AkkaQuickstart$delayedInit$body.class
+[debug] 	Prison$StartGame.class
+[debug] 	Prison$StartGame$.class
+[debug] 	Prisoner$.class
+[debug] Registering generated classes:
+[debug] 	Prisoner$msg_ChangeTheScore.class
+[debug] 	AkkaQuickstart$.class
+[debug] 	Prison.class
+[debug] 	Prisoner$msg_ActorInfo.class
+[debug] 	Prisoner$msg_AskToFight$.class
+[debug] 	Prisoner$conversation.class
+[debug] 	Prisoner.class
+[debug] 	Prison$.class
+[debug] 	Prisoner$CollideGuard$.class
+[debug] 	Prisoner$conversation$.class
+[debug] 	Prisoner$msgType_T.class
+[debug] 	Prisoner$collision.class
+[debug] 	Prisoner$CollidePlayer.class
+[debug] 	Prisoner$msg_ChangeTheScore$.class
+[debug] 	Prisoner$msg_ActorInfo$.class
+[debug] 	AkkaQuickstart.class
+[debug] 	Prisoner$CollideWall.class
+[debug] 	Prisoner$CollideGuard.class
+[debug] 	Prisoner$CollideWall$.class
+[debug] 	Prisoner$talk.class
+[debug] 	Prisoner$CollidePlayer$.class
+[debug] 	Prisoner$$anonfun$behaviour_B1$1.class
+[debug] 	Prisoner$$anonfun$behaviour_B2$1.class
+[debug] 	AkkaQuickstart$delayedInit$body.class
+[debug] 	Prisoner$msg_AskToFight.class
 [debug] 	Prison$StartGame.class
 [debug] 	Prison$StartGame$.class
 [debug] 	Prisoner$.class
