@@ -5,9 +5,11 @@ import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
+//import akka.stream.scaladsl.flow
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
+import scala.util.Random
 //#greeter-actor
 
 object Prisoner{
@@ -16,17 +18,19 @@ object Prisoner{
 
   final case class msg_AskToFight(replyTo: ActorRef[msgType_T], point: Int) extends msgType_T
 
-  final case class msg_ActorInfo(name: ActorRef[msgType_T], point: Int) extends msgType_T
+  final case class msg_ActorInfo(name: ActorRef[msgType_T], name2:ActorRef[msgType_T], point: Int) extends msgType_T
 
   final case class msg_ChangeTheScore(point: Int) extends msgType_T
 
   sealed trait collision
 
-  final case class CollideWall() extends collision
+  final case class msg_WallCollision() extends msgType_T
 
-  final case class CollidePlayer(replyTo: ActorRef[collision], positionX: Int, positionY: Int) extends collision
+  final case class msg_CheckPlayerCollision(replyTo: ActorRef[msgType_T], positionX: Int, positionY: Int) extends msgType_T
 
-  final case class CollideGuard(point: Int) extends collision
+  final case class CollideGuard(point: Int) extends msgType_T
+
+  final case class move(direction: String) extends msgType_T
 
   sealed trait talk
 
@@ -38,13 +42,15 @@ object Prisoner{
 }
 
 class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
+
   import Prisoner._
 
+  val rand = new scala.util.Random
   var points = 2000
   var shield = true
   var position = Array.ofDim[Int](2)
-  position(0) = 1 //x cordinates
-  position(1) = 3 //y cordinates
+  position(0) = rand.between(1, 10) //x cordinates
+  position(1) = rand.between(1, 10) //y cordinates
   implicit val timeout = Timeout(5 seconds)
 
 
@@ -57,11 +63,12 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
 
       case msg_AskToFight(replyTo, point) =>
         //Pushes the current message to the back of the mailbox.
-        context.self ! msg_AskToFight(replyTo,point)
+        context.self ! msg_AskToFight(replyTo, point)
         behaviour_B1 //Behavior.same
 
-      case msg_ActorInfo(name, point) =>
+      case msg_ActorInfo(name, name2, point) =>
         name ! msg_AskToFight(context.self, point)
+        name2 ! msg_AskToFight(name, point)
         behaviour_B1 //Behavior.same
     }
 
@@ -70,6 +77,7 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
 
   def behaviour_B2(): Behavior[msgType_T] = {
     //(point, name)
+    //Behaviors.supervise(behaviour_B2).onFailure()
     Behaviors.receiveMessagePartial {
       case msg_AskToFight(replyTo, point) =>
         replyTo ! msg_ChangeTheScore(point)
@@ -87,8 +95,11 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
           Behaviors.stopped
         }
         else {
-        replyTo ! msg_AskToFight(context.self, point)
-        behaviour_B1
+          //Flow.delay(1)
+          replyTo ! msg_AskToFight(context.self, point)
+          //replyTo ! msg_CheckPlayerCollision(context.self, position(0), position(1))
+
+          behaviour_B1
         }
 
       case msg_ChangeTheScore(point) =>
@@ -96,42 +107,59 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         context.self ! msg_ChangeTheScore(point)
         behaviour_B2 //Behavior.same
 
-      case msg_ActorInfo(name, point) =>
+      case msg_ActorInfo(name, name2, point) =>
         name ! msg_AskToFight(context.self, point)
+        name2 ! msg_AskToFight(name, point)
         behaviour_B1 //Change the behavior
     }
   }
 
-  def CheckCollition(): Behavior[collision] = Behaviors.receive { (context, message) =>
-          message match {
-            case CollidePlayer(replyTo, xPos, yPos) =>
-              //if the player position is the same as the opponent, push back
-              if (xPos == position(0) && yPos == position(1)) {
-                replyTo ! CollidePlayer(context.self, position(0), position(1))
-                position(0) -= 1
-                Behaviors.same
-              }
-              else
-                Behaviors.same
+  def CheckCollition(): Behavior[msgType_T] =
+    Behaviors.receiveMessagePartial {
 
-            case CollideWall() =>
-              //Wall is a static object so push back only player
-              position(0) -= 1
-              Behaviors.same
-
-            case CollideGuard(point) =>
-              //if caught by guard, lose points
-              points -= point
-              Behaviors.same
-          }
+      case msg_CheckPlayerCollision(replyTo, xPos, yPos) =>
+        //if the player position is the same as the opponent, push back
+        if (xPos == position(0) && yPos == position(1)) {
+          replyTo ! msg_CheckPlayerCollision(context.self, position(0), position(1))
+          println(context.self.toString + "collided")
+          position(0) -= rand.between(1, 3)
+          replyTo ! msg_AskToFight(context.self, points)
+          behaviour_B2
+        }
+        else {
+          position(0) += rand.between(1, 3)
           Behaviors.same
         }
+
+      case msg_WallCollision() =>
+        //Wall is a static object so push back only player
+        position(0) -= 1
+        Behaviors.same
+
+      case CollideGuard(point) =>
+        //if caught by guard, lose points
+        points -= point
+        position(0) -= rand.between(2, 5)
+        Behaviors.same
+
+      case move(direction) =>
+        direction match {
+          case "up" => position(0) += 1
+          case "down" => position(0) -= 1
+          case "right" => position(1) += 1
+          case "left" => position(1) -= 1
+        }
+        context.self ! msg_CheckPlayerCollision(context.self,position(0),position(1));
+        CheckCollition
+    }
+
+
 
   def Conversation(): Behavior[talk] = Behaviors.receive { (context, message) =>
             message match {
               case conversation(replyTo) =>
                 println("hello")
-                replyTo ! conversation(context.self)
+                //replyTo ! conversation(context.self)
                 Behaviors.same
             }
           }
@@ -151,8 +179,8 @@ object Prison {
 
       Behaviors.receiveMessage { message =>
         //Send messages to P2 and P3
-        prisoner ! Prisoner.msg_ActorInfo(prisoner2, message.points)
-        prisoner ! Prisoner.msg_ActorInfo(prisoner3, message.points)
+        prisoner ! Prisoner.msg_ActorInfo(prisoner2, prisoner3, message.points)
+        prisoner ! Prisoner.msg_ActorInfo(prisoner3, prisoner2, message.points)
         Behaviors.same
       }
     }
@@ -167,6 +195,7 @@ object AkkaQuickstart extends App {
     akka.log-dead-letters = OFF
     akka.log-dead-letters-during-shutdown = false
   """)
+
   val prisonMain: ActorSystem[Prison.StartGame] = ActorSystem(Prison(), "AkkaQuickStart", ConfigFactory.load(customConf))
   //#actor-system
   val change_points = 500
