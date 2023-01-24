@@ -1,11 +1,11 @@
 //#full-example
 
 //import akka.actor.typed.internal.receptionist.LocalReceptionist.behavior
+
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-//import akka.stream.scaladsl.flow
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -16,7 +16,7 @@ object Prisoner{
 
   sealed trait msgType_T
 
-  final case class msg_AskToFight(replyTo: ActorRef[msgType_T], point: Int) extends msgType_T
+  final case class msg_AskToFight(replyTo: ActorRef[msgType_T],xPos:Int, yPos:Int, point: Int) extends msgType_T
 
   final case class msg_ActorInfo(name: ActorRef[msgType_T], name2:ActorRef[msgType_T], point: Int) extends msgType_T
 
@@ -30,7 +30,7 @@ object Prisoner{
 
   final case class CollideGuard(point: Int) extends msgType_T
 
-  final case class move(direction: String) extends msgType_T
+  final case class move(direction: String, posChecker: ActorRef[msgType_T]) extends msgType_T
 
   sealed trait talk
 
@@ -48,7 +48,8 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
   val rand = new scala.util.Random
   var points = 2000
   var shield = true
-  var position = Array.ofDim[Int](2)
+  var position = Array.ofDim[Int](2) //(x,y)
+  val positionRange = 5
   position(0) = rand.between(1, 10) //x cordinates
   position(1) = rand.between(1, 10) //y cordinates
   implicit val timeout = Timeout(5 seconds)
@@ -61,25 +62,24 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         println(context.self.toString + "now has " + points)
         behaviour_B2 //Change behavior
 
-      case msg_AskToFight(replyTo, point) =>
+      case msg_AskToFight(replyTo,xPos,yPos, point) =>
         //Pushes the current message to the back of the mailbox.
-        context.self ! msg_AskToFight(replyTo, point)
+        context.self ! msg_AskToFight(replyTo,xPos,yPos, point)
         behaviour_B1 //Behavior.same
 
       case msg_ActorInfo(name, name2, point) =>
-        name ! msg_AskToFight(context.self, point)
-        name2 ! msg_AskToFight(name, point)
+        name ! msg_AskToFight(context.self,position(0),position(1), point)
+        name2 ! msg_AskToFight(name,position(0),position(1), point) // fix bug later
         behaviour_B1 //Behavior.same
     }
-
-
   }
 
   def behaviour_B2(): Behavior[msgType_T] = {
     //(point, name)
-    //Behaviors.supervise(behaviour_B2).onFailure()
     Behaviors.receiveMessagePartial {
-      case msg_AskToFight(replyTo, point) =>
+      case msg_AskToFight(replyTo,xPos,yPos, point) =>
+        if(xPos <= position(0) + positionRange && xPos >= position(0) - positionRange //check if players are close
+        && yPos <= position(1) + positionRange && yPos >= position(1) + positionRange)
         replyTo ! msg_ChangeTheScore(point)
         if (shield) {
           points -= point / 2
@@ -96,7 +96,7 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         }
         else {
           //Flow.delay(1)
-          replyTo ! msg_AskToFight(context.self, point)
+          replyTo ! msg_AskToFight(context.self,position(0),position(1), point)
           //replyTo ! msg_CheckPlayerCollision(context.self, position(0), position(1))
 
           behaviour_B1
@@ -108,28 +108,14 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         behaviour_B2 //Behavior.same
 
       case msg_ActorInfo(name, name2, point) =>
-        name ! msg_AskToFight(context.self, point)
-        name2 ! msg_AskToFight(name, point)
+        name ! msg_AskToFight(context.self,position(0),position(1), point)
+        name2 ! msg_AskToFight(name,position(0),position(1), point) //fix bug later
         behaviour_B1 //Change the behavior
     }
   }
 
   def CheckCollition(): Behavior[msgType_T] =
     Behaviors.receiveMessagePartial {
-
-      case msg_CheckPlayerCollision(replyTo, xPos, yPos) =>
-        //if the player position is the same as the opponent, push back
-        if (xPos == position(0) && yPos == position(1)) {
-          replyTo ! msg_CheckPlayerCollision(context.self, position(0), position(1))
-          println(context.self.toString + "collided")
-          position(0) -= rand.between(1, 3)
-          replyTo ! msg_AskToFight(context.self, points)
-          behaviour_B2
-        }
-        else {
-          position(0) += rand.between(1, 3)
-          Behaviors.same
-        }
 
       case msg_WallCollision() =>
         //Wall is a static object so push back only player
@@ -142,14 +128,13 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         position(0) -= rand.between(2, 5)
         Behaviors.same
 
-      case move(direction) =>
+      case move(direction, posChecker) =>
         direction match {
           case "up" => position(0) += 1
           case "down" => position(0) -= 1
           case "right" => position(1) += 1
           case "left" => position(1) -= 1
         }
-        context.self ! msg_CheckPlayerCollision(context.self,position(0),position(1));
         CheckCollition
     }
 
