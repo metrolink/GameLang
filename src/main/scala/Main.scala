@@ -18,7 +18,7 @@ object Prisoner{
 
   final case class msg_AskToFight(replyTo: ActorRef[msgType_T],xPos:Int, yPos:Int, point: Int) extends msgType_T
 
-  final case class msg_ActorInfo(name: ActorRef[msgType_T], name2:ActorRef[msgType_T], point: Int) extends msgType_T
+  final case class msg_ActorInfo(name: ActorRef[msgType_T], point: Int) extends msgType_T
 
   final case class msg_ChangeTheScore(point: Int) extends msgType_T
 
@@ -26,7 +26,6 @@ object Prisoner{
 
   final case class msg_WallCollision() extends msgType_T
 
-  final case class msg_CheckPlayerCollision(replyTo: ActorRef[msgType_T], positionX: Int, positionY: Int) extends msgType_T
 
   final case class CollideGuard(point: Int) extends msgType_T
 
@@ -67,9 +66,8 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         context.self ! msg_AskToFight(replyTo,xPos,yPos, point)
         behaviour_B1 //Behavior.same
 
-      case msg_ActorInfo(name, name2, point) =>
+      case msg_ActorInfo(name, point) =>
         name ! msg_AskToFight(context.self,position(0),position(1), point)
-        name2 ! msg_AskToFight(name,position(0),position(1), point) // fix bug later
         behaviour_B1 //Behavior.same
     }
   }
@@ -79,37 +77,42 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
     Behaviors.receiveMessagePartial {
       case msg_AskToFight(replyTo,xPos,yPos, point) =>
         if(xPos <= position(0) + positionRange && xPos >= position(0) - positionRange //check if players are close
-        && yPos <= position(1) + positionRange && yPos >= position(1) + positionRange)
-        replyTo ! msg_ChangeTheScore(point)
-        if (shield) {
-          points -= point / 2
-          println(context.self.toString + "has shield and now has " + points)
-          shield = false
-        }
-        else {
-          points -= point * 2
-          println(context.self.toString + " lost points and now have: " + points)
-        }
-        if (points < 0) {
-          println(context.self.toString + " stopped")
-          Behaviors.stopped
-        }
-        else {
-          //Flow.delay(1)
-          replyTo ! msg_AskToFight(context.self,position(0),position(1), point)
-          //replyTo ! msg_CheckPlayerCollision(context.self, position(0), position(1))
+        && yPos <= position(1) + positionRange && yPos >= position(1) - positionRange) {
+          replyTo ! msg_ChangeTheScore(point)
+          if (shield) {
+            points -= point / 2
+            println(context.self.toString + "has shield and now has " + points)
+            shield = false
+          }
+          else {
+            points -= point * 2
+            println(context.self.toString + " lost points and now have: " + points)
+          }
 
-          behaviour_B1
+          if (points < 0) {
+            println(context.self.toString + " stopped")
+            Behaviors.stopped
+          }
+          else {
+            //Flow.delay(1)
+            replyTo ! msg_AskToFight(context.self, position(0), position(1), point)
+
+            behaviour_B1
+          }
+        }else{
+          position(0) = rand.between(1, 10)
+          position(1) = rand.between(1, 10)
+          Behaviors.same
         }
+
 
       case msg_ChangeTheScore(point) =>
         //Pushes the current message to the back of the mailbox queue.
         context.self ! msg_ChangeTheScore(point)
         behaviour_B2 //Behavior.same
 
-      case msg_ActorInfo(name, name2, point) =>
+      case msg_ActorInfo(name, point) =>
         name ! msg_AskToFight(context.self,position(0),position(1), point)
-        name2 ! msg_AskToFight(name,position(0),position(1), point) //fix bug later
         behaviour_B1 //Change the behavior
     }
   }
@@ -164,8 +167,8 @@ object Prison {
 
       Behaviors.receiveMessage { message =>
         //Send messages to P2 and P3
-        prisoner ! Prisoner.msg_ActorInfo(prisoner2, prisoner3, message.points)
-        prisoner ! Prisoner.msg_ActorInfo(prisoner3, prisoner2, message.points)
+        prisoner ! Prisoner.msg_ActorInfo(prisoner2, message.points)
+        prisoner ! Prisoner.msg_ActorInfo(prisoner3, message.points)
         Behaviors.same
       }
     }
