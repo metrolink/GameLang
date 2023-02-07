@@ -22,7 +22,7 @@ object Prisoner{
 
   final case class msg_ChangeTheScore(point: Int) extends msgType_T
 
-  sealed trait collision
+
 
   final case class msg_WallCollision() extends msgType_T
 
@@ -30,10 +30,7 @@ object Prisoner{
   final case class CollideGuard(point: Int) extends msgType_T
 
   final case class move(direction: String, posChecker: ActorRef[msgType_T]) extends msgType_T
-
-  sealed trait talk
-
-  final case class conversation(replyTo: ActorRef[talk]) extends talk
+  
 
   def apply(): Behavior[msgType_T] = {
     Behaviors.setup(context => new Prisoner(context).behaviour_B2())
@@ -62,6 +59,8 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         behaviour_B2 //Change behavior
 
       case msg_AskToFight(replyTo,xPos,yPos, point) =>
+        position(0) = rand.between(1, 10)
+        position(1) = rand.between(1, 10)
         //Pushes the current message to the back of the mailbox.
         context.self ! msg_AskToFight(replyTo,xPos,yPos, point)
         behaviour_B1 //Behavior.same
@@ -100,10 +99,12 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
             behaviour_B1
           }
         }else{
+          replyTo ! msg_ChangeTheScore(0)
           position(0) = rand.between(1, 10)
           position(1) = rand.between(1, 10)
-          Behaviors.same
+          behaviour_B2
         }
+
 
 
       case msg_ChangeTheScore(point) =>
