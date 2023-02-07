@@ -22,16 +22,6 @@ object Prisoner{
 
   final case class msg_ChangeTheScore(point: Int) extends msgType_T
 
-
-
-  final case class msg_WallCollision() extends msgType_T
-
-
-  final case class CollideGuard(point: Int) extends msgType_T
-
-  final case class move(direction: String, posChecker: ActorRef[msgType_T]) extends msgType_T
-  
-
   def apply(): Behavior[msgType_T] = {
     Behaviors.setup(context => new Prisoner(context).behaviour_B2())
   }
@@ -48,7 +38,7 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
   val positionRange = 5
   position(0) = rand.between(1, 10) //x cordinates
   position(1) = rand.between(1, 10) //y cordinates
-  implicit val timeout = Timeout(5 seconds)
+  //implicit val timeout = Timeout(5 seconds)
 
 
   def behaviour_B1(): Behavior[msgType_T] = {
@@ -58,15 +48,15 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         println(context.self.toString + "now has " + points)
         behaviour_B2 //Change behavior
 
-      case msg_AskToFight(replyTo,xPos,yPos, point) =>
+      case msg_AskToFight(replyTo, xPos, yPos, point) =>
         position(0) = rand.between(1, 10)
         position(1) = rand.between(1, 10)
         //Pushes the current message to the back of the mailbox.
-        context.self ! msg_AskToFight(replyTo,xPos,yPos, point)
+        context.self ! msg_AskToFight(replyTo, xPos, yPos, point)
         behaviour_B1 //Behavior.same
 
       case msg_ActorInfo(name, point) =>
-        name ! msg_AskToFight(context.self,position(0),position(1), point)
+        name ! msg_AskToFight(context.self, position(0), position(1), point)
         behaviour_B1 //Behavior.same
     }
   }
@@ -74,9 +64,9 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
   def behaviour_B2(): Behavior[msgType_T] = {
     //(point, name)
     Behaviors.receiveMessagePartial {
-      case msg_AskToFight(replyTo,xPos,yPos, point) =>
-        if(xPos <= position(0) + positionRange && xPos >= position(0) - positionRange //check if players are close
-        && yPos <= position(1) + positionRange && yPos >= position(1) - positionRange) {
+      case msg_AskToFight(replyTo, xPos, yPos, point) =>
+        if (xPos <= position(0) + positionRange && xPos >= position(0) - positionRange //check if players are close
+          && yPos <= position(1) + positionRange && yPos >= position(1) - positionRange) {
           replyTo ! msg_ChangeTheScore(point)
           if (shield) {
             points -= point / 2
@@ -98,13 +88,12 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
 
             behaviour_B1
           }
-        }else{
+        } else {
           replyTo ! msg_ChangeTheScore(0)
           position(0) = rand.between(1, 10)
           position(1) = rand.between(1, 10)
           behaviour_B2
         }
-
 
 
       case msg_ChangeTheScore(point) =>
@@ -113,52 +102,16 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
         behaviour_B2 //Behavior.same
 
       case msg_ActorInfo(name, point) =>
-        name ! msg_AskToFight(context.self,position(0),position(1), point)
+        name ! msg_AskToFight(context.self, position(0), position(1), point)
         behaviour_B1 //Change the behavior
     }
   }
-
-  def CheckCollition(): Behavior[msgType_T] =
-    Behaviors.receiveMessagePartial {
-
-      case msg_WallCollision() =>
-        //Wall is a static object so push back only player
-        position(0) -= 1
-        Behaviors.same
-
-      case CollideGuard(point) =>
-        //if caught by guard, lose points
-        points -= point
-        position(0) -= rand.between(2, 5)
-        Behaviors.same
-
-      case move(direction, posChecker) =>
-        direction match {
-          case "up" => position(0) += 1
-          case "down" => position(0) -= 1
-          case "right" => position(1) += 1
-          case "left" => position(1) -= 1
-        }
-        CheckCollition
-    }
-
-
-
-  def Conversation(): Behavior[talk] = Behaviors.receive { (context, message) =>
-            message match {
-              case conversation(replyTo) =>
-                println("hello")
-                //replyTo ! conversation(context.self)
-                Behaviors.same
-            }
-          }
-        }
-
+}
 
 object Prison {
 
-  final case class StartGame(name: String, points:Int)
-
+  final case class StartGame()
+  val change_points = 500
   def apply(): Behavior[StartGame] =
     Behaviors.setup { context =>
       //#create-actors
@@ -168,8 +121,8 @@ object Prison {
 
       Behaviors.receiveMessage { message =>
         //Send messages to P2 and P3
-        prisoner ! Prisoner.msg_ActorInfo(prisoner2, message.points)
-        prisoner ! Prisoner.msg_ActorInfo(prisoner3, message.points)
+        prisoner ! Prisoner.msg_ActorInfo(prisoner2, change_points)
+        prisoner ! Prisoner.msg_ActorInfo(prisoner3, change_points)
         Behaviors.same
       }
     }
@@ -186,10 +139,9 @@ object AkkaQuickstart extends App {
   """)
 
   val prisonMain: ActorSystem[Prison.StartGame] = ActorSystem(Prison(), "AkkaQuickStart", ConfigFactory.load(customConf))
-  //#actor-system
-  val change_points = 500
-  //#main-send-messages
-  prisonMain ! Prison.StartGame("P2", change_points)
+
+  
+  prisonMain ! Prison.StartGame()
 
 }
 //#main-class
