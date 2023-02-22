@@ -32,20 +32,44 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
   import Prisoner._
 
   val rand = new scala.util.Random
-  var points = 2000
+  var score = 2000
   var shield = true
   var position = Array.ofDim[Int](2) //(x,y)
   val positionRange = 5
   position(0) = rand.between(1, 10) //x cordinates
   position(1) = rand.between(1, 10) //y cordinates
   //implicit val timeout = Timeout(5 seconds)
+  def relocate(): Unit = {
+    position(0) = rand.between(1, 10)
+    position(1) = rand.between(1, 10)
+  }
 
+  def ChangeScoreAndCheckShield(point:Int): Unit = {
+    if (shield) {
+      score -= point/2
+      shield = false
+    }
+    else {
+      score -= point * 2
+      println(context.self.toString + " lost points and now have: " + score)
+    }
+  }
+
+  def CheckIfColliding(xPosition: Int, yPosition: Int): Boolean = {
+    if (xPosition <= position(0) + positionRange && xPosition >= position(0) - positionRange //check if players are close
+      && yPosition <= position(1) + positionRange && yPosition >= position(1) - positionRange){
+      return true
+    }
+    else{
+      return false
+    }
+  }
 
   def behaviour_B1(): Behavior[msgType_T] = {
     Behaviors.receiveMessagePartial {
       case msg_ChangeTheScore(point) =>
-        points += point
-        println(context.self.toString + "now has " + points)
+        score += point
+        println(context.self.toString + "now has " + score)
         behaviour_B2 //Change behavior
 
       case msg_AskToFight(replyTo, xPos, yPos, point) =>
@@ -65,20 +89,13 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
     //(point, name)
     Behaviors.receiveMessagePartial {
       case msg_AskToFight(replyTo, xPos, yPos, point) =>
-        if (xPos <= position(0) + positionRange && xPos >= position(0) - positionRange //check if players are close
-          && yPos <= position(1) + positionRange && yPos >= position(1) - positionRange) {
+        if (CheckIfColliding(xPos,yPos)) {
           replyTo ! msg_ChangeTheScore(point)
-          if (shield) {
-            points -= point / 2
-            println(context.self.toString + "has shield and now has " + points)
-            shield = false
-          }
-          else {
-            points -= point * 2
-            println(context.self.toString + " lost points and now have: " + points)
-          }
 
-          if (points < 0) {
+            ChangeScoreAndCheckShield(point)
+
+
+          if (score < 0) {
             println(context.self.toString + " stopped")
             Behaviors.stopped
           }
@@ -90,8 +107,7 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
           }
         } else {
           replyTo ! msg_ChangeTheScore(0)
-          position(0) = rand.between(1, 10)
-          position(1) = rand.between(1, 10)
+          relocate()
           behaviour_B2
         }
 
@@ -140,7 +156,7 @@ object AkkaQuickstart extends App {
 
   val prisonMain: ActorSystem[Prison.StartGame] = ActorSystem(Prison(), "AkkaQuickStart", ConfigFactory.load(customConf))
 
-  
+
   prisonMain ! Prison.StartGame()
 
 }
