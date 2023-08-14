@@ -32,12 +32,12 @@ class Prisoner(context: ActorContext[Prisoner.msgType_T]) {
   import Prisoner._
 
   val rand = new scala.util.Random
-  var score = 2000
-  var shield = true
+  var score :Int = 2000
+  var shield :Boolean = true
   var position = Array.ofDim[Int](2) //(x,y)
-  val positionRange = 5
-  position(0) = rand.between(1, 10) //x cordinates
-  position(1) = rand.between(1, 10) //y cordinates
+  val positionRange :Int = 5
+  var xCoordinate :Int = rand.between(1, 10) //x cordinates
+  var yCoordinate :Int = rand.between(1, 10) //y cordinates
   //implicit val timeout = Timeout(5 seconds)
   def relocate(): Unit = {
     position(0) = rand.between(1, 10)
